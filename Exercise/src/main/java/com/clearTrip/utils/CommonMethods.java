@@ -69,5 +69,15 @@ public class CommonMethods {
 	    }
 	    return foundAlert;
 	}
+	
+	public static boolean isElementPresent(WebElement webElement) {
+        try {
+            boolean isPresent = webElement.isDisplayed();
+            return isPresent;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+        
+    }
 
 }

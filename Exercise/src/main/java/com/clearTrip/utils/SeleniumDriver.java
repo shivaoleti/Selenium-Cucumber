@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
@@ -22,9 +23,11 @@ public class SeleniumDriver {
     public final static int PAGE_LOAD_TIMEOUT = 50;
 
     private  SeleniumDriver() {
+    	ChromeOptions options = new ChromeOptions();
+    	options.addArguments("--disable-notifications");
     	System.err.println(System.getProperty("user.dir"));
     	System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"//"+"chromedriver.exe");
-    	driver = new ChromeDriver();
+    	driver = new ChromeDriver(options);
         driver.manage().window().maximize();
 
         waitDriver = new WebDriverWait(driver, TIMEOUT);

@@ -52,7 +52,7 @@ public class FlightSearchResultsPageActions {
         
 	}
 	
-	public void getRowDetails(WebElement listview ,int row) throws Throwable
+	/*public void getRowDetails(WebElement listview ,int row) throws Throwable
 	{
 		if(flightSearchResultsPageLoc.SearchResults_FromFlightsListView.isDisplayed())
 			System.out.println("found");
@@ -60,26 +60,32 @@ public class FlightSearchResultsPageActions {
 			System.out.println("not found");
 		//WebElement element=flightSearchResultsPageLoc.SearchResults_FromFlightsListView.findElement(By.xpath("li["+row+"]"));
 		WebElement element=listview.findElement(By.xpath("li["+row+"]"));
-		List<String>rowData=getWebTableHeaderData(element);
+	//	List<String>rowData=getSelectedRowData(element);
 	}
+	*/
 	
+	/* get the Flight Details of the selected row 
+	 * listview --complete all the flights (parent view of) of either onWard or Return journery
+	 * */
 	
-	public java.util.List<String> getWebTableHeaderData(WebElement element) throws Throwable {
-        //thdata=table header data
-        //WebElement tableRow = SeleniumDriver.getDriver().findElement(by);
-        java.util.List<String> tableHeaderData = new ArrayList<String>();
+	public java.util.List<String> getSelectedRowData(WebElement listview ,int row) throws Throwable {
+        
+		
+		WebElement element=listview.findElement(By.xpath("li["+row+"]"));
+        java.util.List<String> flightData = new ArrayList<String>();
         List<WebElement> colData = element.findElements(By.tagName("th"));
         System.out.println("table column size:" + colData.size());
         Reporter.addStepLog("Flight Details");
+        flightData.add(colData.get(1).findElement(By.cssSelector("img")).getAttribute("title"));
         Reporter.addStepLog(colData.get(1).getAttribute("class")+":" + colData.get(1).findElement(By.cssSelector("img")).getAttribute("title"));
         for (int i = 2; i < colData.size(); i++) {
             String str = colData.get(i).getText();
             Reporter.addStepLog(colData.get(i).getAttribute("class")+":" + str);
             System.out.println(colData.get(i).getAttribute("class")+":" + str);
-            tableHeaderData.add(str);
+            flightData.add(str);
         }
 
-        return tableHeaderData;
+        return flightData;
 
     }
 

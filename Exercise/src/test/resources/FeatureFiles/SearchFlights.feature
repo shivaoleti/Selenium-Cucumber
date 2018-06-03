@@ -17,6 +17,7 @@ Feature: Acceptance testing.
     Then I read departure Flights <specific> rowData
     Then I read Return Flights <specific> rowData
     Then I Book the Tickets
+    Then I read ItenaryDetails
     
     
     

@@ -1,6 +1,11 @@
 package steps;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.clearTrip.pages.actions.FlightSearchResultsPageActions;
+import com.clearTrip.pages.actions.ItineraryPageActions;
+import com.clearTrip.pages.locators.ItineraryPageLocators;
 import com.clearTrip.utils.CommonMethods;
 import com.clearTrip.utils.GetScreenShot;
 import com.clearTrip.utils.SeleniumDriver;
@@ -9,6 +14,9 @@ import com.cucumber.listener.Reporter;
 import cucumber.api.java.en.Then;
 
 public class FlightsSearchResults {
+	
+	public static List<String> onWardFlightDetails=new ArrayList<String>();
+	public static List<String> returnFlightDetails=new ArrayList<String>();
 	
 	FlightSearchResultsPageActions searchActions=new FlightSearchResultsPageActions();
 	
@@ -33,13 +41,13 @@ public class FlightsSearchResults {
 	public void i_read_DepartureFlights_rowData(int row) throws Throwable {
 	   
 		
-		searchActions.getRowDetails(searchActions.getDepartureFlightsList(),row);
+		onWardFlightDetails=searchActions.getSelectedRowData(searchActions.getDepartureFlightsList(),row);
 	}
 	
 	@Then("^I read Return Flights (\\d+) rowData$")
 	public void i_read_ReturnFlights_rowData(int row) throws Throwable {
 	   
-		searchActions.getRowDetails(searchActions.getReturnFlightsList(),row);
+		returnFlightDetails=searchActions.getSelectedRowData(searchActions.getReturnFlightsList(),row);
 	}
 	@Then("^I Book the Tickets$")
 	public void i_Book_Tickets() throws Throwable {
@@ -50,7 +58,15 @@ public class FlightsSearchResults {
 		Reporter.addScreenCaptureFromPath(reivewPage, "Checkout Page");
 	}
 	
-	
-	
+	@Then("^I read ItenaryDetails$")
+	public void i_Read_ItineraryDetails() throws Throwable {
+	   
+		new ItineraryPageActions().getOnwardJourneyFlightDetails();
+		new ItineraryPageActions().getReturnJourneyFlightDetails();
+		new ItineraryPageActions().verifyItineraryOnWardFlightDetails_With_SearchPageOnwardFlightDetails();
+		new ItineraryPageActions().verifyItineraryReturnFlightDetails_With_SearchPageRetunFlightDetails();
+		
+	}
+	 
 
 }
